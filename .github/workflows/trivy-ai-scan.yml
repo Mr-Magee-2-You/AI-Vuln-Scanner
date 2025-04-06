@@ -3,36 +3,24 @@ name: AI-Powered Trivy Scan
 on: [push, workflow_dispatch]
 
 jobs:
-  trivy-scan:
+  trivy_scan:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Set up Docker
-      run: |
-        sudo apt-get update
-        sudo apt-get install docker-compose -y
+      - name: Install Trivy
+        run: |
+          sudo apt-get install wget
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.41.0/trivy_0.41.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.41.0_Linux-64bit.deb
 
-    - name: Pull and Start Juice Shop (Vulnerable Web App)
-      run: |
-        docker pull bkimminich/juice-shop
-        docker run -d -p 3000:3000 --name juice-shop bkimminich/juice-shop
-        sleep 30
+      - name: Run Trivy Scan
+        run: |
+          trivy fs --security-checks vuln,config,secret --output trivy-results.json .
 
-    - name: Install Trivy
-      run: |
-        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.51.1_Linux-64bit.deb
-        sudo dpkg -i trivy_0.51.1_Linux-64bit.deb
-
-    - name: Run Trivy Scan
-      run: |
-        trivy image bkimminich/juice-shop > trivy_report.txt
-        cat trivy_report.txt
-
-    - name: Upload Trivy Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: trivy-report
-        path: trivy_report.txt
+      - name: Upload Trivy Scan Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-scan-results
+          path: trivy-results.json
