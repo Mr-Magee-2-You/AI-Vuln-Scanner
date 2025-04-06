@@ -18,7 +18,7 @@ jobs:
         trivy image bkimminich/juice-shop --format json --output trivy-results.json
 
     - name: Upload Trivy scan results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: trivy-scan-results
         path: trivy-results.table
