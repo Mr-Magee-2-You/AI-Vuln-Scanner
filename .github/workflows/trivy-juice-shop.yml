@@ -10,8 +10,8 @@ jobs:
     - name: Set up Trivy
       run: |
         sudo apt install wget -y
-        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.41.0_Linux-64bit.deb
-        sudo dpkg -i trivy_0.41.0_Linux-64bit.deb
+        wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.61.0_Linux-64bit.deb
+        sudo dpkg -i trivy_0.61.0_Linux-64bit.deb
 
     - name: Run Trivy scan on Juice Shop Docker image
       run: |
