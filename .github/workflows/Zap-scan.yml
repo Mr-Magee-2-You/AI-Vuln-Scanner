@@ -1,16 +1,17 @@
 name: OWASP ZAP Scan
 
-on: [push, workflow_dispatch]
+on: [push]
 
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
-    name: ZAP Scan
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Run OWASP ZAP Full Scan
-        uses: zaproxy/action-full-scan@v0.4.0
+      - name: OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.8.0
         with:
-          target: 'https://juice-shop-n0kl.onrender.com'
+          target: 'https://juice-shop-n0kl.onrender.com'  # Your deployed Juice Shop app
+          cmd_options: '-a'  # active scan
