@@ -21,7 +21,7 @@ jobs:
           allow_issue_writing: false  # Do not attempt to create GitHub issues
 
       - name: Upload ZAP Scan Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: zap-scan-reports
           path: |
