@@ -1,16 +1,18 @@
 name: OWASP ZAP Scan
 
-  on: [push]
+on:
+  push:
 
-  jobs:
-    zap_scan:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
 
-        - name: OWASP ZAP Scan
-          uses: zaproxy/action-full-scan@v0.4.0
-          with:
-            target: 'https://juice-shop-n0kl.onrender.com'  #Juice-shop web application scan only
-            allow_issue_writing: false
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: OWASP ZAP Scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: 'https://juice-shop-n0kl.onrender.com'
+          allow_issue_writing: false
